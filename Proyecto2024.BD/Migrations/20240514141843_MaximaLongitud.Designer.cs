@@ -11,8 +11,8 @@ using Proyecto2024.BD.Data;
 namespace Proyecto2024.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240513144440_ActualizoPersona")]
-    partial class ActualizoPersona
+    [Migration("20240514141843_MaximaLongitud")]
+    partial class MaximaLongitud
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,17 +34,28 @@ namespace Proyecto2024.BD.Migrations
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("NumDoc")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<int>("TDocumentoId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Apellido", "Nombre" }, "Persona_Apellido_Nombre");
+
+                    b.HasIndex(new[] { "TDocumentoId", "NumDoc" }, "Persona_UQ")
+                        .IsUnique();
 
                     b.ToTable("Personas");
                 });
@@ -68,6 +79,17 @@ namespace Proyecto2024.BD.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TDocumentos");
+                });
+
+            modelBuilder.Entity("Proyecto2024.BD.Data.Entity.Persona", b =>
+                {
+                    b.HasOne("Proyecto2024.BD.Data.Entity.TDocumento", "TDocumento")
+                        .WithMany()
+                        .HasForeignKey("TDocumentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TDocumento");
                 });
 #pragma warning restore 612, 618
         }

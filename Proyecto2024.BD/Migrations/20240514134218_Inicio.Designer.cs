@@ -11,8 +11,8 @@ using Proyecto2024.BD.Data;
 namespace Proyecto2024.BD.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240513143557_PrimerasTablas")]
-    partial class PrimerasTablas
+    [Migration("20240514134218_Inicio")]
+    partial class Inicio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,24 @@ namespace Proyecto2024.BD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumDoc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TDocumentoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TDocumentoId");
 
                     b.ToTable("Personas");
                 });
@@ -56,6 +73,17 @@ namespace Proyecto2024.BD.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TDocumentos");
+                });
+
+            modelBuilder.Entity("Proyecto2024.BD.Data.Entity.Persona", b =>
+                {
+                    b.HasOne("Proyecto2024.BD.Data.Entity.TDocumento", "TDocumento")
+                        .WithMany()
+                        .HasForeignKey("TDocumentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TDocumento");
                 });
 #pragma warning restore 612, 618
         }
