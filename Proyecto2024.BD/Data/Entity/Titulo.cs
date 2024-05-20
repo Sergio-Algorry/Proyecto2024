@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Proyecto2024.BD.Data.Entity
 {
-    [Index(nameof(Codigo), Name = "TDocumento_UQ", IsUnique = true)]
-    public class TDocumento : EntityBase
+    [Index(nameof(Codigo), Name = "Titulo_UQ", IsUnique = true)]
+    public class Titulo : EntityBase
     {
-        [Required(ErrorMessage = "El código del tipo de documento es obligatorio.")]
+        [Required(ErrorMessage = "El código del título es obligatorio.")]
         [MaxLength(4, ErrorMessage = "Máximo número de caracteres {1}.")]
         public string Codigo { get; set; }
 
-        [Required(ErrorMessage = "El nombre del tipo de documento es obligatorio.")]
+        [Required(ErrorMessage = "El nombre del título es obligatorio.")]
         [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}.")]
         public string Nombre { get; set; }
 
-        public List<Persona> Personas { get; set; }
+        public List<Profesion> Profesiones { get; set; }
 
     }
 }

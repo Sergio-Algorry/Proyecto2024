@@ -12,9 +12,25 @@ namespace Proyecto2024.BD.Data
     {
         public DbSet<TDocumento> TDocumentos { get; set; }
         public DbSet<Persona> Personas { get; set; }
+        public DbSet<Profesion> Profesiones { get; set; }
 
         public Context(DbContextOptions options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            var cascadeFKs = modelBuilder.Model.G­etEntityTypes()
+                                          .SelectMany(t => t.GetForeignKeys())
+                                          .Where(fk => !fk.IsOwnership
+                                                       && fk.DeleteBehavior == DeleteBehavior.Casca­de);
+            foreach (var fk in cascadeFKs)
+            {
+                fk.DeleteBehavior = DeleteBehavior.Restr­ict;
+            }
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
