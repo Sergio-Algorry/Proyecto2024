@@ -52,7 +52,7 @@ namespace Proyecto2024.BD.Migrations
                     b.HasIndex(new[] { "Codigo" }, "Especialidad_UQ")
                         .IsUnique();
 
-                    b.ToTable("Especialidades");
+                    b.ToTable("Especialidades", (string)null);
                 });
 
             modelBuilder.Entity("Proyecto2024.BD.Data.Entity.Matricula", b =>
@@ -84,7 +84,7 @@ namespace Proyecto2024.BD.Migrations
                     b.HasIndex(new[] { "ProfesionId", "EspecialidadId" }, "Matricula_UQ")
                         .IsUnique();
 
-                    b.ToTable("Matriculas");
+                    b.ToTable("Matriculas", (string)null);
                 });
 
             modelBuilder.Entity("Proyecto2024.BD.Data.Entity.Persona", b =>
@@ -123,7 +123,7 @@ namespace Proyecto2024.BD.Migrations
                     b.HasIndex(new[] { "TDocumentoId", "NumDoc" }, "Persona_UQ")
                         .IsUnique();
 
-                    b.ToTable("Personas");
+                    b.ToTable("Personas", (string)null);
                 });
 
             modelBuilder.Entity("Proyecto2024.BD.Data.Entity.Profesion", b =>
@@ -150,7 +150,7 @@ namespace Proyecto2024.BD.Migrations
                     b.HasIndex(new[] { "PersonaId", "TituloId" }, "Profesion_UQ")
                         .IsUnique();
 
-                    b.ToTable("Profesiones");
+                    b.ToTable("Profesiones", (string)null);
                 });
 
             modelBuilder.Entity("Proyecto2024.BD.Data.Entity.TDocumento", b =>
@@ -179,7 +179,7 @@ namespace Proyecto2024.BD.Migrations
                     b.HasIndex(new[] { "Codigo" }, "TDocumento_UQ")
                         .IsUnique();
 
-                    b.ToTable("TDocumentos");
+                    b.ToTable("TDocumentos", (string)null);
                 });
 
             modelBuilder.Entity("Proyecto2024.BD.Data.Entity.Titulo", b =>
@@ -208,7 +208,7 @@ namespace Proyecto2024.BD.Migrations
                     b.HasIndex(new[] { "Codigo" }, "Titulo_UQ")
                         .IsUnique();
 
-                    b.ToTable("Titulos");
+                    b.ToTable("Titulos", (string)null);
                 });
 
             modelBuilder.Entity("Proyecto2024.BD.Data.Entity.Especialidad", b =>
