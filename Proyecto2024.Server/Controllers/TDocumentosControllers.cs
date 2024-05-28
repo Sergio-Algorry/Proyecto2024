@@ -34,7 +34,7 @@ namespace Proyecto2024.Server.Controllers
             return pepe;
         }
 
-        [HttpGet("{cod}")] //api/TDocumentos/DNI
+        [HttpGet("GetByCod/{cod}")] //api/TDocumentos/GetByCod/DNI
         public async Task<ActionResult<TDocumento>> GetByCod(string cod)
         {
             TDocumento? pepe = await context.TDocumentos
