@@ -16,10 +16,41 @@ namespace Proyecto2024.Server.Controllers
             this.context = context;
         }
 
-        [HttpGet]
+        [HttpGet]    //api/TDocumentos
         public async Task<ActionResult<List<TDocumento>>> Get()
         {
             return await context.TDocumentos.ToListAsync();
+        }
+
+        [HttpGet("{id:int}")] //api/TDocumentos/2
+        public async Task<ActionResult<TDocumento>> Get(int id)
+        {
+            TDocumento? pepe = await context.TDocumentos
+                             .FirstOrDefaultAsync(x => x.Id == id);
+            if (pepe == null)
+            {
+                return NotFound();
+            }
+            return pepe;
+        }
+
+        [HttpGet("{cod}")] //api/TDocumentos/DNI
+        public async Task<ActionResult<TDocumento>> GetByCod(string cod)
+        {
+            TDocumento? pepe = await context.TDocumentos
+                             .FirstOrDefaultAsync(x => x.Codigo == cod);
+            if (pepe == null)
+            {
+                return NotFound();
+            }
+            return pepe;
+        }
+
+        [HttpGet("existe/{id:int}")] //api/TDocumentos/existe/2
+        public async Task<ActionResult<bool>> Existe(int id)
+        {
+            var existe = await context.TDocumentos.AnyAsync(x => x.Id == id);
+            return existe;
         }
 
         [HttpPost]
@@ -31,9 +62,9 @@ namespace Proyecto2024.Server.Controllers
                 await context.SaveChangesAsync();
                 return entidad.Id;
             }
-            catch (Exception e)
+            catch (Exception err)
             {
-                return BadRequest(e.Message);
+                return BadRequest(err.Message);
             }
         }
 
@@ -45,7 +76,7 @@ namespace Proyecto2024.Server.Controllers
                 return BadRequest("Datos Incorrectos");
             }
             var pepe = await context.TDocumentos
-                             .Where(e => e.Id==id)
+                             .Where(reg => reg.Id==id)
                              .FirstOrDefaultAsync();
 
             if (pepe == null)
@@ -68,5 +99,22 @@ namespace Proyecto2024.Server.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpDelete("{id:int}")] //api/TDocumentos/2
+        public async Task<ActionResult> Delete(int id)
+        {
+            var existe = await context.TDocumentos.AnyAsync(x => x.Id==id);
+            if (!existe)
+            {
+                return NotFound($"El tipo de documento {id} no existe.");
+            }
+            TDocumento EntidadABorrar = new TDocumento();
+            EntidadABorrar.Id = id;
+
+            context.Remove(EntidadABorrar);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
     }
 }
