@@ -3,6 +3,7 @@ using Proyecto2024.BD.Data.Entity;
 using Proyecto2024.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using Proyecto2024.Shared.DTO;
+using AutoMapper;
 
 namespace Proyecto2024.Server.Controllers
 {
@@ -11,10 +12,13 @@ namespace Proyecto2024.Server.Controllers
     public class TitulosControllers : ControllerBase
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
-        public TitulosControllers(Context context)
+        public TitulosControllers(Context context,
+                                  IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         [HttpGet]    //api/Titulos
@@ -58,10 +62,11 @@ namespace Proyecto2024.Server.Controllers
         {
             try
             {
-                Titulo entidad  = new Titulo();
-                entidad.Codigo= entidadDTO.Codigo;
-                entidad.Nombre= entidadDTO.Nombre;
+                //Titulo entidad = new Titulo();
+                //entidad.Codigo = entidadDTO.Codigo;
+                //entidad.Nombre = entidadDTO.Nombre;
 
+                Titulo entidad = mapper.Map<Titulo>(entidadDTO);
 
                 context.Titulos.Add(entidad);
                 await context.SaveChangesAsync();
