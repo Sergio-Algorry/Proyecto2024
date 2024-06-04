@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Proyecto2024.BD\Proyecto2024.BD.csproj" />
+    <ProjectReference Include="..\Proyecto2024.Shared\Proyecto2024.Shared.csproj" />
   </ItemGroup>
 
 </Project>

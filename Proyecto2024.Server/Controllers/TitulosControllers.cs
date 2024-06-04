@@ -2,6 +2,7 @@
 using Proyecto2024.BD.Data.Entity;
 using Proyecto2024.BD.Data;
 using Microsoft.EntityFrameworkCore;
+using Proyecto2024.Shared.DTO;
 
 namespace Proyecto2024.Server.Controllers
 {
@@ -53,10 +54,15 @@ namespace Proyecto2024.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Titulo entidad)
+        public async Task<ActionResult<int>> Post(CrearTituloDTO entidadDTO)
         {
             try
             {
+                Titulo entidad  = new Titulo();
+                entidad.Codigo= entidadDTO.Codigo;
+                entidad.Nombre= entidadDTO.Nombre;
+
+
                 context.Titulos.Add(entidad);
                 await context.SaveChangesAsync();
                 return entidad.Id;
