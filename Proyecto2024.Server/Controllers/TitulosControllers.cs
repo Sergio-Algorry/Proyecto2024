@@ -4,6 +4,7 @@ using Proyecto2024.BD.Data;
 using Microsoft.EntityFrameworkCore;
 using Proyecto2024.Shared.DTO;
 using AutoMapper;
+using Proyecto2024.Server.Repositorio;
 
 namespace Proyecto2024.Server.Controllers
 {
@@ -11,26 +12,27 @@ namespace Proyecto2024.Server.Controllers
     [Route("api/Titulos")]
     public class TitulosControllers : ControllerBase
     {
-        private readonly Context context;
+        private readonly ITituloRepositorio repositorio;
         private readonly IMapper mapper;
 
-        public TitulosControllers(Context context,
+        public TitulosControllers(ITituloRepositorio repositorio,
                                   IMapper mapper)
         {
-            this.context = context;
+            this.repositorio = repositorio;
             this.mapper = mapper;
         }
 
         [HttpGet]    //api/Titulos
         public async Task<ActionResult<List<Titulo>>> Get()
         {
-            return await context.Titulos.ToListAsync();
+            return await repositorio.Select();
         }
 
         [HttpGet("{id:int}")] //api/Titulos/2
         public async Task<ActionResult<Titulo>> Get(int id)
         {
-            Titulo? pepe = await context.Titulos.FirstOrDefaultAsync(x => x.Id == id);
+
+            Titulo? pepe = await repositorio.SelectById(id);
             if (pepe == null)
             {
                 return NotFound();
@@ -41,8 +43,7 @@ namespace Proyecto2024.Server.Controllers
         [HttpGet("GetByCod/{cod}")] //api/Titulos/GetByCod/DNI
         public async Task<ActionResult<Titulo>> GetByCod(string cod)
         {
-            Titulo? pepe = await context.Titulos
-                             .FirstOrDefaultAsync(x => x.Codigo == cod);
+            Titulo? pepe = await repositorio.SelectByCod(cod);
             if (pepe == null)
             {
                 return NotFound();
@@ -53,7 +54,7 @@ namespace Proyecto2024.Server.Controllers
         [HttpGet("existe/{id:int}")] //api/Titulos/existe/2
         public async Task<ActionResult<bool>> Existe(int id)
         {
-            var existe = await context.Titulos.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
             return existe;
         }
 
@@ -62,15 +63,9 @@ namespace Proyecto2024.Server.Controllers
         {
             try
             {
-                //Titulo entidad = new Titulo();
-                //entidad.Codigo = entidadDTO.Codigo;
-                //entidad.Nombre = entidadDTO.Nombre;
-
                 Titulo entidad = mapper.Map<Titulo>(entidadDTO);
 
-                context.Titulos.Add(entidad);
-                await context.SaveChangesAsync();
-                return entidad.Id;
+                return await repositorio.Insert(entidad);
             }
             catch (Exception err)
             {
@@ -85,9 +80,7 @@ namespace Proyecto2024.Server.Controllers
             {
                 return BadRequest("Datos Incorrectos");
             }
-            var pepe = await context.Titulos
-                             .Where(reg => reg.Id == id)
-                             .FirstOrDefaultAsync();
+            var pepe = await repositorio.SelectById(id);
 
             if (pepe == null)
             {
@@ -100,8 +93,7 @@ namespace Proyecto2024.Server.Controllers
 
             try
             {
-                context.Titulos.Update(pepe);
-                await context.SaveChangesAsync();
+                await repositorio.Update(id, pepe);
                 return Ok();
             }
             catch (Exception e)
@@ -113,19 +105,20 @@ namespace Proyecto2024.Server.Controllers
         [HttpDelete("{id:int}")] //api/Titulos/2
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Titulos.AnyAsync(x => x.Id == id);
+            var existe = await repositorio.Existe(id);
             if (!existe)
             {
                 return NotFound($"El tipo de documento {id} no existe.");
             }
-            Titulo EntidadABorrar = new Titulo();
-            EntidadABorrar.Id = id;
-
-            context.Remove(EntidadABorrar);
-            await context.SaveChangesAsync();
-            return Ok();
+            if (await repositorio.Delete(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(); 
+            }
         }
 
-    
     }
 }

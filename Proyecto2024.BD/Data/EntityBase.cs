@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace Proyecto2024.BD.Data
 {
-    public class EntityBase
+    public class EntityBase : IEntityBase
     {
         public int Id { get; set; }
 
         public bool Activo { get; set; }
+
+
+
     }
 }
