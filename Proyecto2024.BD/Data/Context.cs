@@ -10,6 +10,8 @@ namespace Proyecto2024.BD.Data
 {
     public class Context : DbContext
     {
+        
+        public DbSet<Simbolo> Simbolos { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
         public DbSet<Matricula> Matriculas { get; set; }
         public DbSet<Persona> Personas { get; set; }
