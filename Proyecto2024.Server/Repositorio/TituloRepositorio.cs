@@ -14,7 +14,7 @@ namespace Proyecto2024.Server.Repositorio
             this.context = context;
         }
 
-        public async Task<Titulo> SelectByCod(string cod)
+        public async Task<Titulo?> SelectByCod(string cod)
         {
             Titulo? pepe = await context.Titulos
                              .FirstOrDefaultAsync(x => x.Codigo == cod);

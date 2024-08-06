@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proyecto2024.Server", "Proy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proyecto2024.BD", "Proyecto2024.BD\Proyecto2024.BD.csproj", "{FE14DB3C-3306-418E-AD57-60850BFE27E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proyecto2024.Shared", "Proyecto2024.Shared\Proyecto2024.Shared.csproj", "{D94ABA00-6409-45D1-8F03-2F9CBFD3BE48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proyecto2024.Shared", "Proyecto2024.Shared\Proyecto2024.Shared.csproj", "{D94ABA00-6409-45D1-8F03-2F9CBFD3BE48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proyecto2024.Client", "Proyecto2024.Client\Proyecto2024.Client.csproj", "{998AF1D9-59DB-4CA6-8FAB-14AE2AFDE27C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D94ABA00-6409-45D1-8F03-2F9CBFD3BE48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D94ABA00-6409-45D1-8F03-2F9CBFD3BE48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D94ABA00-6409-45D1-8F03-2F9CBFD3BE48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{998AF1D9-59DB-4CA6-8FAB-14AE2AFDE27C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{998AF1D9-59DB-4CA6-8FAB-14AE2AFDE27C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{998AF1D9-59DB-4CA6-8FAB-14AE2AFDE27C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{998AF1D9-59DB-4CA6-8FAB-14AE2AFDE27C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
