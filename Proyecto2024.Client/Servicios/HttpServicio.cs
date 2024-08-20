@@ -2,7 +2,7 @@
 
 namespace Proyecto2024.Client.Servicios
 {
-    public class HttpServicio
+    public class HttpServicio : IHttpServicio
     {
         private readonly HttpClient http;
 
@@ -15,9 +15,10 @@ namespace Proyecto2024.Client.Servicios
         {
             var response = await http.GetAsync(url);
 
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 var respuesta = await DesSerializar<T>(response);
+
                 return new HttpRespuesta<T>(respuesta, false, response);
             }
             else
@@ -30,7 +31,7 @@ namespace Proyecto2024.Client.Servicios
         {
             var respuestaStr = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T>(respuestaStr,
-                new JsonSerializerOptions(){ PropertyNameCaseInsensitive = true });
+                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
     }
 }

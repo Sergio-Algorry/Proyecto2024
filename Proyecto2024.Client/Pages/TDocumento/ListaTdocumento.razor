@@ -1,0 +1,23 @@
+﻿@page "/api/TDocumentos"
+@inject IHttpServicio http
+
+<h3>Lista de Tipos de documentos</h3>
+<br />
+<table>
+    <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+    </tr>
+    @foreach (var item in listaDocumentos)
+    {
+     <tr>
+         <td>@item.Codigo</td>
+         <td>@item.Nombre</td>
+     </tr>   
+    }
+
+</table>
+
+@code {
+    List<TDocumento> listaDocumentos;
+}
