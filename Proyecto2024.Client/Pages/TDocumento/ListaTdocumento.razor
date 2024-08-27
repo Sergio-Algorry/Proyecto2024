@@ -8,16 +8,55 @@
         <th>Código</th>
         <th>Nombre</th>
     </tr>
-    @foreach (var item in listaDocumentos)
+    @if (Mensaje == "")
     {
-     <tr>
-         <td>@item.Codigo</td>
-         <td>@item.Nombre</td>
-     </tr>   
+        @if (listaDocumentos == null)
+        {
+            <p>Buscando....</p>
+        }
+        else if(listaDocumentos.Count == 0)
+        {
+            <p>No existen tipos de documentos</p>
+        }
+        else
+        {
+            @foreach (var item in listaDocumentos)
+            {
+                <tr>
+                    <td>@item.Codigo</td>
+                    <td>@item.Nombre</td>
+                </tr>
+            }
+        }
     }
-
+    else
+    {
+        <p> Error: @Mensaje</p>
+    }
 </table>
 
 @code {
     List<TDocumento> listaDocumentos;
+    string Mensaje = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Leer();
+    }
+
+    private async Task Leer()
+    {
+        var resp = await http.Get<List<TDocumento>>("api/TDocumentos");
+        if (!resp.Error)
+        {
+            listaDocumentos = resp.Respuesta;
+        }
+        else
+        {
+            Mensaje = await resp.ObtenerError();
+        }
+    }
+
+
 }
