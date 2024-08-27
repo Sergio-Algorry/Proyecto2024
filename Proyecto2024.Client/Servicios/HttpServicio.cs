@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using Azure;
+using System.Text;
+using System.Text.Json;
 
 namespace Proyecto2024.Client.Servicios
 {
@@ -9,7 +11,7 @@ namespace Proyecto2024.Client.Servicios
         public HttpServicio(HttpClient http)
         {
             this.http = http;
-        }
+        }   
 
         public async Task<HttpRespuesta<T>> Get<T>(string url) //https://localhost:7268/api/TDocumentos
         {
@@ -24,6 +26,26 @@ namespace Proyecto2024.Client.Servicios
             else
             {
                 return new HttpRespuesta<T>(default, true, response);
+            }
+        }
+
+        public async Task<HttpRespuesta<object>> Post<T>(string url, T entidad)
+        {
+            var enviarJson = JsonSerializer.Serialize(entidad);
+
+            var enviarContent = new StringContent(enviarJson,
+                                Encoding.UTF8,
+                                "application/json");
+
+            var response = await http.PostAsync(url, enviarContent);
+            if (response.IsSuccessStatusCode) 
+            {
+                var respuesta = await DesSerializar<object>(response);
+                return new HttpRespuesta<object>(respuesta, false, response);
+            }
+            else
+            {
+                return new HttpRespuesta<object>(default, true, response);
             }
         }
 
