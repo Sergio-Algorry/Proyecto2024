@@ -1,0 +1,45 @@
+﻿@page "/api/TDocumentos/crear"
+@inject IHttpServicio http
+@inject NavigationManager navigationManager
+<h3>Nuevo tipo de documento</h3>
+
+<EditForm Model="tDocumento" OnValidSubmit="Grabar">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Código</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@tDocumento.Codigo" />
+            <ValidationMessage For="@(() => tDocumento.Codigo)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Nombre</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@tDocumento.Nombre" />
+            <ValidationMessage For="@(() => tDocumento.Nombre)" />
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-primary" type="submit">Aceptar</button>
+    <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+</EditForm>
+
+@code {
+    private TDocumento tDocumento = new TDocumento();
+
+    private async Task Grabar()
+    {
+        var httpRespuesta = await http.Post<TDocumento>("api/TDocumentos", tDocumento);
+        if(httpRespuesta.Error)
+        {
+            var body = httpRespuesta.HttpResponseMessage;
+        }
+        navigationManager.NavigateTo("/api/TDocumentos");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/api/TDocumentos");
+    }
+
+}
