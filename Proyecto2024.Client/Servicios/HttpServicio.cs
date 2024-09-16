@@ -60,8 +60,8 @@ namespace Proyecto2024.Client.Servicios
             var response = await http.PutAsync(url, enviarContent);
             if (response.IsSuccessStatusCode)
             {
-                var respuesta = await DesSerializar<object>(response);
-                return new HttpRespuesta<object>(respuesta, false, response);
+                //var respuesta = await DesSerializar<object>(response);
+                return new HttpRespuesta<object>(null, false, response);
             }
             else
             {

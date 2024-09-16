@@ -19,6 +19,6 @@ namespace Proyecto2024.BD.Data.Entity
         [MaxLength(100, ErrorMessage = "Máximo número de caracteres {1}.")]
         public string Nombre { get; set; }
 
-        public List<Persona> Personas { get; set; }
+        public List<Persona> Personas { get; set; } = new List<Persona>();
     }
 }

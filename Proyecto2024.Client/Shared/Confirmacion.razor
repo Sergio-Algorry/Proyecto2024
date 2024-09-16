@@ -1,0 +1,63 @@
+﻿@if (Mostrar)
+{
+    <div class="modal-backdrop show"></div>
+    <div class="modal fade show" id="exampleModal" tabindex="-1"
+         role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Titulo</h5>
+                    <button @onclick="onCancel" type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @ChildContent
+                </div>
+                <div class="modal-footer">
+                    @if (verCancelar)
+                    {
+                        <button @onclick="onCancel" type="button" class="btn btn-secondary"
+                                data-dismiss="modal">
+                            @textCancelar
+                        </button>
+                    }
+                    @if (verOk)
+                    {
+                        <button @onclick="onConfirm" type="button" class="btn btn-primary">
+                            @textOk
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private bool Mostrar = false;
+    [Parameter] public bool verCancelar { get; set; } = true;
+    [Parameter] public bool verOk { get; set; } = true;
+
+    [Parameter] public string textCancelar { get; set; } = "Cancelar";
+    [Parameter] public string textOk { get; set; } = "Aceptar";
+    [Parameter] public string Titulo { get; set; } = "Confirmar";
+
+    [Parameter] public EventCallback onCancel { get; set; }
+    [Parameter] public EventCallback onConfirm { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    public void Ver()
+    {
+        Mostrar = true;
+    }
+
+    // public void Ocultar() => Mostrar = false;
+    public void Ocultar()
+    {
+        Mostrar = false;
+    }
+}

@@ -33,7 +33,12 @@
                             Editar
                         </a>
                     </td>
-
+                    <td>
+                        <button class="btn btn-danger"
+                           @onclick = "()=>Eliminar(item)">
+                            Borrar
+                        </button>
+                    </td>
                 </tr>
             }
         }
@@ -44,8 +49,22 @@
     }
 </table>
 
+<Confirmacion @ref="confirmacion"
+              Titulo="CUIDADO"
+              textCancelar="Salir"
+              onCancel="Cancelar"
+              onConfirm="Borrar">
+              <h5>Está por borrar el tipo de documento</h5>
+              <br />
+              <p>Está seguro?</p>
+</Confirmacion>
+
+
 @code {
+    Confirmacion confirmacion;
+
     List<TDocumento> listaDocumentos;
+    TDocumento tDocumento;
     string Mensaje = "";
 
     protected override async Task OnInitializedAsync()
@@ -67,5 +86,19 @@
         }
     }
 
+    private async Task Eliminar(TDocumento tdocumento)
+    {
+        confirmacion.Ver();
+    }
+
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+    }
+
+    private async Task Borrar()
+    {
+
+    }
 
 }
