@@ -67,6 +67,8 @@
     TDocumento tDocumento;
     string Mensaje = "";
 
+    TDocumento? tDocBorrar = null;
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -88,17 +90,25 @@
 
     private async Task Eliminar(TDocumento tdocumento)
     {
+        tDocBorrar = tdocumento;
         confirmacion.Ver();
     }
 
     private void Cancelar()
     {
         confirmacion.Ocultar();
+        tDocBorrar = null;
     }
 
     private async Task Borrar()
     {
-
+        var respuesta = await http.Delete($"api/TDocumentos/{tDocBorrar.Id}");
+        if (respuesta.Error)
+        {
+            var body = "No se pudo borrar";
+        }
+        Cancelar();
+        await Leer();
     }
 
 }
