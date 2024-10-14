@@ -23,6 +23,11 @@ namespace Proyecto2024.Server.Controllers
             return await repositorio.Select();
         }
 
+        /// <summary>
+        /// Endpoint para obtener un objeto de tipo de documento
+        /// </summary>
+        /// <param name="id">Id del objeto</param>
+        /// <returns></returns>
         [HttpGet("{id:int}")] //api/TDocumentos/2
         public async Task<ActionResult<TDocumento>> Get(int id)
         {

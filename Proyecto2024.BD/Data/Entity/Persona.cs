@@ -27,6 +27,7 @@ namespace Proyecto2024.BD.Data.Entity
 
         [Required(ErrorMessage = "El tipo de documento es obligatoria.")]
         public int TDocumentoId { get; set; }
+
         public TDocumento TDocumento { get; set; }
 
         public List<Profesion> Profesiones { get; set; }

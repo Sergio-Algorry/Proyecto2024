@@ -15,6 +15,10 @@ namespace Proyecto2024.BD.Data
         public DbSet<Especialidad> Especialidades { get; set; }
         public DbSet<Matricula> Matriculas { get; set; }
         public DbSet<Persona> Personas { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DbSet<Profesion> Profesiones { get; set; }
         public DbSet<TDocumento> TDocumentos { get; set; }
         public DbSet<Titulo> Titulos { get; set; }
